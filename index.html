@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Poziom 1 - Pierwszy taniec (PRO)</title>
+  <style>
+    :root{
+      --btn: 78px;
+      --btnAction: 96px;
+      --gap: 12px;
+      --radius: 18px;
+      --radiusAction: 22px;
+      --uiPad: 14px;
+      --safeBottom: env(safe-area-inset-bottom);
+      --safeTop: env(safe-area-inset-top);
+      --safeLeft: env(safe-area-inset-left);
+      --safeRight: env(safe-area-inset-right);
+    }
+    html, body { margin:0; padding:0; height:100%; background:#05040a; overflow:hidden; }
+    body { touch-action: none; }
+    #wrap { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; }
+    canvas { width:100vw; height:100vh; display:block; image-rendering: pixelated; }
+
+    .ui {
+      position:fixed; left:0; right:0; bottom:0;
+      padding: calc(var(--uiPad) + var(--safeBottom)) calc(var(--uiPad) + var(--safeRight)) var(--uiPad) calc(var(--uiPad) + var(--safeLeft));
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap: var(--gap);
+      pointer-events:none;
+      z-index: 50;
+    }
+    .cluster { display:flex; gap: var(--gap); pointer-events:none; }
+    .btn {
+      width: var(--btn); height: var(--btn);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display:flex; align-items:center; justify-content:center;
+      color: rgba(255,255,255,0.92);
+      font: 800 15px/1.05 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      user-select:none;
+      -webkit-user-select:none;
+      pointer-events:auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+    }
+    .btn:active { transform: scale(0.98); background: rgba(255,255,255,0.14); }
+    .btn.action { width: var(--btnAction); height: var(--btnAction); border-radius: var(--radiusAction); font-size: 16px; }
+
+    .hint {
+      position:fixed; top:0; left:0; right:0;
+      padding: calc(10px + var(--safeTop)) 14px 10px 14px;
+      color: rgba(255,255,255,0.92);
+      font: 650 14px/1.35 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      text-align:center;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0));
+      pointer-events:none;
+      z-index: 40;
+      white-space: pre-line;
+    }
+
+    #portraitOverlay{
+      position: fixed; inset: 0;
+      display: none;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 24px;
+      background: rgba(0,0,0,0.78);
+      z-index: 100;
+      color: rgba(255,255,255,0.92);
+      font: 850 18px/1.3 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      pointer-events: none;
+    }
+    #portraitOverlay .box{
+      max-width: 560px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      padding: 18px 16px;
+    }
+    #portraitOverlay .sub{
+      margin-top: 10px;
+      font-weight: 650;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+    #portraitOverlay .chip{
+      display:inline-block;
+      margin-top: 12px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(243,122,31,0.16);
+      border: 1px solid rgba(243,122,31,0.40);
+      font-weight: 900;
+      letter-spacing: 0.3px;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <canvas id="c" width="1280" height="720"></canvas>
+  </div>
+
+  <div class="hint" id="hint"></div>
+
+  <div class="ui">
+    <div class="cluster">
+      <div class="btn" id="left">LEWO</div>
+      <div class="btn" id="right">PRAWO</div>
+    </div>
+    <div class="cluster">
+      <div class="btn action" id="act">TANIEC</div>
+    </div>
+  </div>
+
+  <div id="portraitOverlay">
+    <div class="box">
+      Obróć telefon w poziomie (landscape)
+      <div class="sub">W pionie gra wchodzi w pauzę, żeby grało się wygodnie.</div>
+      <div class="chip">AUTO-PAUZA</div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
